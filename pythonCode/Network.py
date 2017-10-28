@@ -5,8 +5,9 @@ class Network:
     self.slot_time=slot_time
     self.cur_time=0
     self.tt=80
-  def run(self):
+  def run(self,node1,node2):
     self.cur_time=self.cur_time+1
+	self.packet_transmit(node1,node2)
   def packet_transmit(self,node1,node2):
     #decide the node to be transmitted
     #check backoff time for that node
@@ -30,5 +31,7 @@ class Network:
 if __name__ == "__main__":
   slot_time=int(input("Enter the slot time"))
   part1=Network(slot_time)
+  node1=Node()
+  node2=Node()
   while(1):
-    part1.run()
+    part1.run(node1,node2)
