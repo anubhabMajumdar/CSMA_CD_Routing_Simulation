@@ -1,5 +1,5 @@
 class Packet:
-	def __init__(self,id,sizecollision_count):
+	def __init__(self,id,size,collision_count):
 		self.id=id
 		self.size=size
 		self.collsion_count=collision_count
