@@ -1,8 +1,8 @@
 class Network:
   import Node
-  def __init__(self):
+  def __init__(self,slot_time=500):
     self.tp=10 #microsec
-    self.rate=100 #so when you divide, you directly get the value in microsec
+    self.slot_time=slot_time
     self.cur_time=0
     self.tt=80
   def run(self):
@@ -28,6 +28,7 @@ class Network:
     print("Simulation end time", self.cur_time)
   
 if __name__ == "__main__":
-  part1=Network()
+  slot_time=int(input("Enter the slot time"))
+  part1=Network(slot_time)
   while(1):
     part1.run()
