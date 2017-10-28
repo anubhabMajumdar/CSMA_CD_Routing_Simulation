@@ -1,5 +1,5 @@
+import Node
 class Network:
-  import Node
   def __init__(self,slot_time):
     self.tp=10 #microsec
     self.slot_time=slot_time
@@ -13,6 +13,8 @@ class Network:
     #check backoff time for that node
     #if backoff time for any node is 0, then 
     #call transmit for that node
+	print("Status of Node 1: ",node1.status)
+	print("Status of Node 2: ",node2.status)
     node1.operation()
     node2.operation()
     return self
@@ -22,10 +24,10 @@ class Network:
       node1.stop_transmit("Collision")
       node2.stop_transmit("Collision")
   def print_stat(self):
-    print("Total packets sent from A")
-    print("Total packets sent from B")
-    print("Average end to end throughput from A to B")
-    print("Average end to end throughput from A to B")
+    print("Total packets sent from A: ")
+    print("Total packets sent from B: ")
+    print("Average end to end throughput from A to B: ")
+    print("Average end to end throughput from B to A: ")
     print("Simulation end time", self.cur_time)
   
 if __name__ == "__main__":
@@ -34,4 +36,4 @@ if __name__ == "__main__":
   node1=Node(1,0.5/slot_time)
   node2=Node(2,0.5/slot_time)
   while(1):
-    part1.run(node1,node2)
+    part1.run(node1,node2)	
