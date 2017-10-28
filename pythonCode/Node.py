@@ -1,6 +1,6 @@
 import numpy as np
-import Packet
-import Network
+from Packet import Packet
+# import Network
 
 class Node:
     def __init__(self, id, l):
@@ -12,14 +12,14 @@ class Node:
         self.transmissionStartTime = 0
         self.packetCount = 1
 
-    def startTransmit(self, curTime):
+    def startTransmit(self, cur_time):
         self.status = "Transmitting"
         self.packet = Packet(self.packetCount)
-        self.transmissionStartTime = curTime
+        self.transmissionStartTime = cur_time
 
-    def reStartTransmit(self, curTime):
+    def reStartTransmit(self, cur_time):
         self.status = "Transmitting"
-        self.transmissionStartTime = curTime
+        self.transmissionStartTime = cur_time
 
     def stopTransmit(self, reason='Ready'):
         self.status = reason
@@ -33,22 +33,22 @@ class Node:
 
     def operation(self, nw):
         if self.status == 'Ready' and self.checkPacketAvailability():
-            self.startTransmit(nw.curTime)
+            self.startTransmit(nw.cur_time)
         elif self.status == 'Transmitting':
-            if self.transmissionStartTime + nw.tt + nw.tp < nw.curTime:
+            if self.transmissionStartTime + nw.tt + nw.tp < nw.cur_time:
                 self.status = "Ready"
                 self.transmissionStartTime = 0
         elif self.status == 'Collision':
             self.calcBackoffTime()
             self.status = 'Waiting'
-        elif self.status == 'Waiting' and self.backoffTime == nw.curTime:
-            self.reStartTransmit(nw.curTime)
+        elif self.status == 'Waiting' and self.backoffTime == nw.cur_time:
+            self.reStartTransmit(nw.cur_time)
 
 
 
 
 
 
-n = Node(1, 0.5)
+# n = Node(1, 0.5)
 
 
