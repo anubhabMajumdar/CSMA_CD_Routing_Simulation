@@ -1,6 +1,6 @@
 class Network:
   import Node
-  def __init__(self,slot_time=500):
+  def __init__(self,slot_time):
     self.tp=10 #microsec
     self.slot_time=slot_time
     self.cur_time=0
@@ -31,7 +31,7 @@ class Network:
 if __name__ == "__main__":
   slot_time=int(input("Enter the slot time"))
   part1=Network(slot_time)
-  node1=Node()
-  node2=Node()
+  node1=Node(1,0.5/slot_time)
+  node2=Node(2,0.5/slot_time)
   while(1):
     part1.run(node1,node2)
