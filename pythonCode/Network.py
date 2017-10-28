@@ -17,9 +17,9 @@ class Network:
     return self
     
   def coll_detect(self,node1,node2):
-    if node1.status=="transmitting" and node2.status=="transmitting":
-      node1.stop_transmit("collision")
-      node2.stop_transmit("collision")
+    if node1.status=="Transmitting" and node2.status=="Transmitting":
+      node1.stop_transmit("Collision")
+      node2.stop_transmit("Collision")
   def print_stat(self):
     print("Total packets sent from A")
     print("Total packets sent from B")
