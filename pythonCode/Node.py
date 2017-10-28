@@ -15,6 +15,7 @@ class Node:
     def startTransmit(self, cur_time):
         self.status = "Transmitting"
         self.packet = Packet(self.packetCount)
+        self.packetCount+=1
         self.transmissionStartTime = cur_time
 
     def reStartTransmit(self, cur_time):
@@ -23,13 +24,17 @@ class Node:
 
     def stopTransmit(self, reason='Ready'):
         self.status = reason
-        self.packet = None
 
     def checkPacketAvailability(self):
         return np.random.poisson(self.lambdaVal) == 1
 
     def calcBackoffTime(self, nw):
-        self.backoffTime = nw.cur_time + (np.random.randint(0, high=(2**self.packet.collision_count)-1) * nw.slot_time)
+        self.packet.incr_collision_count()
+        highVal = (2**self.packet.collision_count)-1
+        if highVal>8:
+            highVal = 8
+        self.backoffTime = nw.cur_time + (np.random.randint(0, high=highVal) * nw.slot_time)
+        print("Node ", self.id, "Packet id = ", self.packet.id, " Packet collision count = ", self.packet.collision_count, " backoff = ", self.backoffTime)
 
     def operation(self, nw):
         if self.status == 'Ready' and self.checkPacketAvailability():
@@ -39,9 +44,9 @@ class Node:
                 self.status = "Ready"
                 self.transmissionStartTime = 0
         elif self.status == 'Collision':
-            self.calcBackoffTime()
+            self.calcBackoffTime(nw)
             self.status = 'Waiting'
-        elif self.status == 'Waiting' and self.backoffTime == nw.cur_time:
+        elif self.status == 'Waiting' and self.backoffTime <= nw.cur_time:
             self.reStartTransmit(nw.cur_time)
 
 

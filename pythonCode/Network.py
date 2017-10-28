@@ -6,10 +6,10 @@ class Network:
     self.tp=10 #microsec
     self.slot_time=slot_time
     self.cur_time=0
-    self.tt=80
+    self.tt=15
   def run(self,node1,node2):
-    self.cur_time=self.cur_time+1
     self.packet_transmit(node1,node2)
+    self.cur_time = self.cur_time + 1
 
   def packet_transmit(self,node1,node2):
     #decide the node to be transmitted
@@ -18,15 +18,19 @@ class Network:
     #call transmit for that node
     node1.operation(self)
     node2.operation(self)
+    self.coll_detect(node1, node2)
+
+    print(self.cur_time)
     print("Status of Node 1: ", node1.status)
     print("Status of Node 2: ", node2.status)
-
+    print("-------------------------------------")
+    print("-------------------------------------")
     # return self
     
   def coll_detect(self,node1,node2):
     if node1.status=="Transmitting" and node2.status=="Transmitting":
-      node1.stop_transmit("Collision")
-      node2.stop_transmit("Collision")
+      node1.stopTransmit("Collision")
+      node2.stopTransmit("Collision")
   def print_stat(self):
     print("Total packets sent from A: ")
     print("Total packets sent from B: ")
@@ -36,11 +40,11 @@ class Network:
   
 if __name__ == "__main__":
   # slot_time=int(input("Enter the slot time"))
-  slot_time = 500
-
+  slot_time = 10
+  l = 5.0
   part1=Network(slot_time)
-  node1=Node(1,0.5/slot_time)
-  node2=Node(2,0.5/slot_time)
+  node1=Node(1,l/slot_time)
+  node2=Node(2,l/slot_time)
   while(1):
     part1.run(node1,node2)
     time.sleep(1)
