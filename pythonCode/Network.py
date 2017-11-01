@@ -34,7 +34,7 @@ class Network:
     
   def coll_detect(self,node1,node2):
     if node1.status=="Transmitting" and node2.status=="Transmitting":
-	  self.collcount=self.collCount+1
+	  self.collCount=self.collCount+1
       node1.stopTransmit("Collision")
       node2.stopTransmit("Collision")
 	
