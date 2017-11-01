@@ -15,7 +15,6 @@ class Node:
     def startTransmit(self, cur_time):
         self.status = "Transmitting"
         self.packet = Packet(self.packetCount)
-        self.packetCount+=1
         self.transmissionStartTime = cur_time
 
     def reStartTransmit(self, cur_time):
@@ -43,13 +42,20 @@ class Node:
             if self.transmissionStartTime + nw.tt + nw.tp < nw.cur_time:
                 self.status = "Ready"
                 self.transmissionStartTime = 0
+                self.packetCount+=1
         elif self.status == 'Collision':
             self.calcBackoffTime(nw)
             self.status = 'Waiting'
         elif self.status == 'Waiting' and self.backoffTime <= nw.cur_time:
             self.reStartTransmit(nw.cur_time)
 
-
+    def throughput(self, nw):
+        total_tt = (self.packetCount-1) * nw.tt
+        total_collisionTime = nw.collCount * 2 * nw.tp
+        total_sendTime = (self.packetCount-1) * (nw.tt + nw.tp)
+        efficiency = float(total_tt)/(total_collisionTime + total_sendTime)
+        th = efficiency * nw.bandwidth
+        return th
 
 
 
