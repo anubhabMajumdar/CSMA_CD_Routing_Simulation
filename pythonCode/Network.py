@@ -33,13 +33,11 @@ class Network:
 		
 
 	def coll_detect(self):
-		tempCount=0
 		collIndex=[]
 		for i in range(1,self.nodeCount+1):
 			if self.node[i].status=="Transmitting":
-				tempCount+=1
 				collIndex.append(i)
-		if tempCount>=2:		
+		if len(collIndex)>=2:		
 			self.collCount=self.collCount+1
 			for i in collIndex:
 				self.node[i].stopTransmit("Collision")
