@@ -23,7 +23,9 @@ class Node:
         self.transmissionStartTime = nw.cur_time
 
     def selectReceiver(self, nw):
-        return random.randint(1, nw.nodeCount)
+        l = range(1, nw.nodeCount+1)
+        l.remove(self.id)
+        return random.choice(l)
 
     def reStartTransmit(self, cur_time):
         self.status = "Transmitting"
