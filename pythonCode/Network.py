@@ -6,7 +6,7 @@ class Network:
 		self.tp=10 #microsec
 		self.slot_time=slot_time
 		self.cur_time=0
-		self.tt=15
+		self.tt=80
 		self.max_time=max_time
 		self.collCount=0
 		self.bandwidth = 100 #Mbps
@@ -47,14 +47,14 @@ class Network:
 	
 if __name__ == "__main__":
 	# slot_time=int(input("Enter the slot time"))
-	slot_time = 10
-	l = 5.0
+	slot_time = 50
+	l = 0.5
 	max_time =int(input("Enter the max time: "))
 	part1=Network(slot_time,max_time)
 	node1=Node(1,l/slot_time)
 	node2=Node(2,l/slot_time)
 	for _ in range(max_time+1):
 		part1.run(node1,node2)
-		time.sleep(1)	
+		# time.sleep(1)	
 
 	part1.print_stat(node1, node2)
