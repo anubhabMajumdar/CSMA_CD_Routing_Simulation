@@ -14,9 +14,9 @@ class Network:
 		self.nodeCount=nodeCount
 		self.distanceBetweenNodes=distanceBetweenNodes
 		self.distance=collections.defaultdict(int)
-		self.node=[]
+		self.node=[-1]
 		for i in range(1,self.nodeCount+1):
-			self.node[i]=Node(i,l/self.slot_time)
+			self.node.append(Node(i,l/self.slot_time))
 			self.distance[i]=(i-1)*self.distanceBetweenNodes
 	
 	def run(self):
@@ -42,18 +42,18 @@ class Network:
 		tempCount=0
 		collIndex=[]
 		for i in range(1,self.nodeCount+1):
-			if node[i].status=="Transmitting":
+			if self.node[i].status=="Transmitting":
 				tempCount+=1
 				collIndex.append(i)
 		if tempCount>=2:		
 			self.collCount=self.collCount+1
 			for i in collIndex:
-				node[i].stopTransmit("Collision")
+				self.node[i].stopTransmit("Collision")
 	
 	def print_stat(self):
 		for i in range(1,nodeCount+1):
-			print("Total packets sent from Node {}: {}".format(i,node[i].packetCount-1))
-			print("Average end to end throughput from Node {}: {}".format(node[i].throughput(self)))
+			print("Total packets sent from Node {}: {}".format(i,self.node[i].packetCount-1))
+			print("Average end to end throughput from Node {}: {}".format(self.node[i].throughput(self)))
 		print("Number of collisions: ", self.collCount)
 		print("Simulation end time", self.cur_time)
 	
@@ -67,6 +67,6 @@ if __name__ == "__main__":
 	part2=Network(slot_time,max_time,nodeCount,distanceBetweenNodes)	
 	for _ in range(max_time+1):
 		part2.run()
-		# time.sleep(1)	
+		time.sleep(1)	
 
 	part2.print_stat()

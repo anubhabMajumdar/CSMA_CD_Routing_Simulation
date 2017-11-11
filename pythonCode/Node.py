@@ -58,8 +58,9 @@ class Node:
 
     def throughput(self, nw):
         total_tt = (self.packetCount-1) * nw.tt
-        total_collisionTime = nw.collCount * 2 * nw.tp
-        total_sendTime = (self.packetCount-1) * (nw.tt + nw.tp)
+        tp = float((nw.distance[nw.nodeCount] - nw.distance[1])*nw.distanceBetweenNodes)/nw.vel
+        total_collisionTime = nw.collCount * 2 * tp
+        total_sendTime = (self.packetCount-1) * (nw.tt + tp)
         try:
             efficiency = float(total_tt)/(total_collisionTime + total_sendTime)
             th = efficiency * nw.bandwidth
