@@ -1,5 +1,6 @@
 import numpy as np
 from Packet import Packet
+import random
 # import Network
 
 class Node:
@@ -11,11 +12,16 @@ class Node:
         self.backoffTime = 0
         self.transmissionStartTime = 0
         self.packetCount = 1
+        self.curTP = 0
 
-    def startTransmit(self, cur_time):
+    def startTransmit(self, nw):
         self.status = "Transmitting"
+        self.curTP = ((abs(nw.distance[self.id] - nw.distance[self.selectReceiver(nw)]))*nw.distanceBetweenNodes)/nw.vel
         self.packet = Packet(self.packetCount)
-        self.transmissionStartTime = cur_time
+        self.transmissionStartTime = nw.cur_time
+
+    def selectReceiver(self, nw):
+        return random.randint(1, nw.nodeCount)
 
     def reStartTransmit(self, cur_time):
         self.status = "Transmitting"
@@ -37,11 +43,12 @@ class Node:
 
     def operation(self, nw):
         if self.status == 'Ready' and self.checkPacketAvailability():
-            self.startTransmit(nw.cur_time)
+            self.startTransmit(nw)
         elif self.status == 'Transmitting':
-            if self.transmissionStartTime + nw.tt + nw.tp < nw.cur_time:
+            if self.transmissionStartTime + nw.tt + self.curTP < nw.cur_time:
                 self.status = "Ready"
                 self.transmissionStartTime = 0
+                self.curTP = 0
                 self.packetCount+=1
         elif self.status == 'Collision':
             self.calcBackoffTime(nw)
@@ -53,8 +60,11 @@ class Node:
         total_tt = (self.packetCount-1) * nw.tt
         total_collisionTime = nw.collCount * 2 * nw.tp
         total_sendTime = (self.packetCount-1) * (nw.tt + nw.tp)
-        efficiency = float(total_tt)/(total_collisionTime + total_sendTime)
-        th = efficiency * nw.bandwidth
+        try:
+            efficiency = float(total_tt)/(total_collisionTime + total_sendTime)
+            th = efficiency * nw.bandwidth
+        except:
+            th = -1
         return th
 
 
