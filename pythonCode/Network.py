@@ -21,16 +21,9 @@ class Network:
 	
 	def run(self):
 		for i in range(1,self.nodeCount+1):
-			self.packet_transmit(self.node[i])
-		self.cur_time = self.cur_time + 1
-
-	def packet_transmit(self,node):
-		#decide the node to be transmitted
-		#check backoff time for that node
-		#if backoff time for any node is 0, then 
-		#call transmit for that node
-		node.operation(self)
+			self.node[i].operation(self)
 		self.coll_detect()
+		self.cur_time = self.cur_time + 1
 
 		print(self.cur_time)
 		for i in range(1,self.nodeCount+1):
@@ -53,7 +46,7 @@ class Network:
 	def print_stat(self):
 		for i in range(1,nodeCount+1):
 			print("Total packets sent from Node {}: {}".format(i,self.node[i].packetCount-1))
-			print("Average end to end throughput from Node {}: {}".format(self.node[i].throughput(self)))
+			print("Average end to end throughput from Node {}: {}".format(i,self.node[i].throughput(self)))
 		print("Number of collisions: ", self.collCount)
 		print("Simulation end time", self.cur_time)
 	
