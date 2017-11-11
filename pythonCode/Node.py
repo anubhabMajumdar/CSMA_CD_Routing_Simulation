@@ -13,10 +13,12 @@ class Node:
         self.transmissionStartTime = 0
         self.packetCount = 1
         self.curTP = 0
+        self.curReceiver = None
 
     def startTransmit(self, nw):
         self.status = "Transmitting"
-        self.curTP = ((abs(nw.distance[self.id] - nw.distance[self.selectReceiver(nw)]))*nw.distanceBetweenNodes)/nw.vel
+        self.curReceiver = self.selectReceiver(nw)
+        self.curTP = ((abs(nw.distance[self.id] - nw.distance[self.curReceiver]))*nw.distanceBetweenNodes)/nw.vel
         self.packet = Packet(self.packetCount)
         self.transmissionStartTime = nw.cur_time
 
@@ -49,6 +51,7 @@ class Node:
                 self.status = "Ready"
                 self.transmissionStartTime = 0
                 self.curTP = 0
+                self.curReceiver = None
                 self.packetCount+=1
         elif self.status == 'Collision':
             self.calcBackoffTime(nw)

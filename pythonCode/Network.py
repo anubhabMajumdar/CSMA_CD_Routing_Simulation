@@ -24,14 +24,14 @@ class Network:
 		for i in range(1,self.nodeCount+1):
 			self.node[i].operation(self)
 		self.coll_detect()
-		self.cur_time = self.cur_time + 1
-
+		
 		print(self.cur_time)
 		for i in range(1,self.nodeCount+1):
-			print("Status of Node {}: {}".format(i,self.node[i].status))
+			print("Status of Node {}: {} to {}".format(i,self.node[i].status, self.node[i].curReceiver))
 			print("-------------------------------------")
-		# return self
+		self.cur_time = self.cur_time + 1
 		
+
 	def coll_detect(self):
 		tempCount=0
 		collIndex=[]
@@ -54,7 +54,7 @@ class Network:
 if __name__ == "__main__":
 	# slot_time=int(input("Enter the slot time"))
 	slot_time = 50
-	l = 0.5
+	l = 25
 	distanceBetweenNodes=2000
 	max_time =int(input("Enter the max time: "))
 	nodeCount=int(input("Enter the number of nodes: "))
