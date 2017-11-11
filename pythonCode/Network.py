@@ -52,12 +52,13 @@ class Network:
 if __name__ == "__main__":
 	# slot_time=int(input("Enter the slot time"))
 	slot_time = 50
-	l = 25
+	l = 0.5
 	distanceBetweenNodes=2000
 	max_time =int(input("Enter the max time: "))
 	nodeCount=int(input("Enter the number of nodes: "))
 	part2=Network(l,slot_time,max_time,nodeCount,distanceBetweenNodes)	
 	for _ in range(max_time+1):
+	# while True:
 		part2.run()
 		time.sleep(1)	
 
