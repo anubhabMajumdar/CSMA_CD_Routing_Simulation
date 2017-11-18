@@ -63,7 +63,9 @@ class Node:
 
     def throughput(self, nw):
         total_tt = (self.packetCount-1) * nw.tt
-        tp = float((nw.distance[nw.nodeCount] - nw.distance[1])*nw.distanceBetweenNodes)/nw.vel
+        # tp = float((nw.distance[nw.nodeCount] - nw.distance[1])*nw.distanceBetweenNodes)/nw.vel
+        tp = float((nw.nodeCount - 1) * nw.distanceBetweenNodes * (10**6))/nw.vel
+        # print "TP = ", tp
         total_collisionTime = nw.collCount * 2 * tp
         total_sendTime = (self.packetCount-1) * (nw.tt + tp)
         try:
