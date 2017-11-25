@@ -1,5 +1,5 @@
 import random
-
+from Router import Router
 
 class WAN:
     def __init__(self, lan1, lan2):
@@ -23,3 +23,10 @@ class WAN:
                       'R4': [['C', 10], ['D', 10], ['R4', 10], ['R1', random.randint(1, 10)],
                              ['R2', random.randint(1, 10)]]
                       }
+
+
+wan = WAN(None, None)
+r = Router('R2')
+for k in wan.graph.keys():
+    print k, "--->", wan.graph[k]
+r.operation(wan)
