@@ -6,7 +6,7 @@ class Network:
 	def __init__(self,l,slot_time,max_time,nodeCount,distanceBetweenNodes):
 		self.slot_time=slot_time
 		self.cur_time=0
-		self.tt=80
+		self.tt=10
 		self.max_time=max_time
 		self.collCount=0
 		self.bandwidth = 100 #Mbps
@@ -51,8 +51,8 @@ class Network:
 	
 if __name__ == "__main__":
 	# slot_time=int(input("Enter the slot time"))
-	slot_time = 500
-	l = 0.5
+	slot_time = 10
+	l = 5
 	distanceBetweenNodes=2000
 	max_time =int(input("Enter the max time: "))
 	nodeCount=int(input("Enter the number of nodes: "))
