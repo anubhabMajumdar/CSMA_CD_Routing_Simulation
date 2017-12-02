@@ -1,7 +1,9 @@
 from Packet import Packet
+import Node
 
 class Host(Node):
     def __init__(self, id, l):
+        super(Host, self).__init__(id)
         self.lambdaVal = l  # per mu sec
         self.packet = None
         self.packetCount = 1

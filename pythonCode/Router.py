@@ -1,9 +1,9 @@
 import Packet
 
 
-class Router:
-    def __init__(self, id):
-        self.id = id
+class Router(Node):
+    def __init__(self,id):
+        super(Router, self).__init__(id)
         self.route_table = {}
         self.buffer = []
 
