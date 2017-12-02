@@ -5,11 +5,8 @@ import collections
 
 class LAN:
     def __init__(self, nodeList):
-        self.tt = 10
         self.collCount = 0
         self.bandwidth = 100  # Mbps
-        self.vel = 2 * (10 ** 8)
-        self.distance = 2000 
         self.nodeList = nodeList
         self.nodeCount = len(self.nodeList)
 
