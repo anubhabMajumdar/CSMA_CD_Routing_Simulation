@@ -1,4 +1,4 @@
-from Node import Node
+import Node
 import time
 import collections
 import WAN
@@ -13,25 +13,27 @@ class LAN:
 
     def run(self, wan):
         for i in range(self.nodeCount):
-            self.node[i].operation(self, wan)
+            self.nodeList[i].operation(wan)
+        print("-----------------------------------------------------")    
         self.coll_detect()
         
 
     def coll_detect(self):
         collIndex = []
-        for i in range(1, 5):
-            if self.host[i].status == "Transmitting":
-                collIndex.append(i)
-            if self.router[i].status == "Transmitting":
-                collIndex.append(i)    
+        for i in range(4):
+            if self.nodeList[i].status == "Transmitting":
+                collIndex.append(i)   
         if len(collIndex) >= 2:
             self.collCount = self.collCount + 1
             for i in collIndex:
-                self.host[i].stopTransmit("Collision")
-                self.router[i].stopTransmit("Collision")
+                if self.nodeList[i].id.startswith("R"):
+                    if not self.nodeList[i].curReceiver.startswith("R"):
+                        self.nodeList[i].stopTransmit("Collision")
+                else:
+                    self.nodeList[i].stopTransmit("Collision")
 
     def print_stat(self):
         for i in range(1, 5):
-            print("Total packets sent from Host {}: {}".format(host[i].id, self.host[i].packetCount - 1))
-            print("Average end to end throughput from Node {}: {}".format(i, self.host[i].throughput(self)))
+            print("Total packets sent from Node {}: {}".format(self.nodeList[i].id, self.nodeList[i].packetCount - 1))
+            #print("Average end to end throughput from Node {}: {}".format(i, self.host[i].throughput(self)))
         print("Number of collisions: ", self.collCount)

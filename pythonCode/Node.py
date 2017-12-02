@@ -1,9 +1,9 @@
 import numpy as np
-from Packet import Packet
+import Packet
 import random
-import WAN
+# import WAN
 
-class Node:
+class Node(object):
     def __init__(self,id):
         self.id = id
         self.status = "Ready"
@@ -15,6 +15,7 @@ class Node:
         self.status = "Transmitting"
 
     def reStartTransmit(self, cur_time):
+        print("{} is sending to {}".format(self.id,self.curReceiver))
         self.status = "Transmitting"
         self.transmissionStartTime = cur_time
 
@@ -26,7 +27,7 @@ class Node:
         highVal = (2**self.packet.collision_count)-1
         if highVal>8:
             highVal = 8
-        self.backoffTime = wan.cur_time + (np.random.randint(0, high=highVal) * 10) # 10 is slot time
+        self.backoffTime = wan.cur_time + (np.random.randint(0, high=highVal) * wan.slot_time) # 10 is slot time
         print("Node ", self.id, "Packet id = ", self.packet.id, " Packet collision count = ", self.packet.collision_count, " backoff = ", self.backoffTime) 
 
     # def throughput(self, lan):

@@ -1,23 +1,27 @@
 import random
-from Router import Router
+import Node
+import Router
 import Host
+import LAN
+import time
 
 class WAN:
-    def __init__(self, host, router):
+    def __init__(self, host, router, slot_time):
         self.cur_time = 0
         self.host = host
         self.router = router
         self.graph = {}
         self.updateGraph()
         self.createLAN(host, router)
-        self.tt = 80
-        self.tp = 10
+        self.tt = 2
+        self.tp = 1
+        self.slot_time=slot_time
 
     def createLAN(self,host, router):
         lan1list = [host[0],host[1],router[0],router[1]]
         lan2list = [host[2],host[3],router[2],router[3]]
-        self.lan1 = LAN(lan1list)
-        self.lan2 = LAN(lan2list)
+        self.lan1 = LAN.LAN(lan1list)
+        self.lan2 = LAN.LAN(lan2list)
 
     def run(self):    
         self.lan1.run(self)
@@ -51,14 +55,15 @@ if __name__ == "__main__":
     # slot_time=int(input("Enter the slot time"))
     host = []
     router = []
-    slot_time = 10
+    slot_time = 15
     lambd = 5
     for i in range(4):
-        host.append(Host(chr(ord('A')+i), float(lambd) / slot_time))
-        router.append(Router("R"+str(i+1)))
+        host.append(Host.Host(chr(ord('A')+i), float(lambd) / slot_time))
+        router.append(Router.Router("R"+str(i+1)))
     max_time = int(input("Enter the max time: "))
-    part3 = WAN(host, router)
+    part3 = WAN(host, router, slot_time)
     for _ in range(max_time + 1):
         part3.run()
+        time.sleep(3)
 
     part3.print_stat()

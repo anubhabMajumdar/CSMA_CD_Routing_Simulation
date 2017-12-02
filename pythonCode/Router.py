@@ -1,11 +1,13 @@
 import Packet
-from WAN import WAN
+# import WAN
+from Node import Node as Node
 
 class Router(Node):
     def __init__(self,id):
         super(Router, self).__init__(id)
         self.route_table = {}
-        self.curPacket = None
+        self.packet = None
+        self.curReceiver = None
         self.transmissionStartTime = 0
         self.packetCount = 1
         self.status
@@ -18,19 +20,22 @@ class Router(Node):
         self.buffer.append(packet)
 
     def routing(self, packet):
-        packet.mac = self.route_table(packet.IP)
+        packet.mac = self.route_table[packet.ip]
+        self.curReceiver = packet.mac
 
     def operation(self, wan):
+        print("Status of Router {} is {} ".format(self.id,self.status))
         if self.status == 'Ready' and len(self.buffer)>0:
             self.startTransmit(wan)
         elif self.status == 'Transmitting':
             if self.transmissionStartTime + wan.tt + self.curTP < wan.cur_time:
                 self.status = "Ready"
+                self.curReceiver = None
                 self.transmissionStartTime = 0
-                send_to = self.curPacket.mac
+                send_to = self.packet.mac
                 if send_to.startswith('R'):
                     idx = int(send_to[-1])-1
-                    wan.router[idx].add_packet(self.curPacket)
+                    wan.router[idx].add_packet(self.packet)
         elif self.status == 'Collision':
             self.calcBackoffTime(wan)
             self.status = 'Waiting'
@@ -40,14 +45,15 @@ class Router(Node):
     def startTransmit(self, wan):
         self.dijkstra(wan)
 
-        self.curPacket = self.buffer[0]
+        self.packet = self.buffer[0]
         del self.buffer[0]
 
-        self.routing(self.curPacket)
+        self.routing(self.packet)
 
+        print("{} is sending to {}".format(self.id,self.curReceiver))
         self.status = 'Transmitting'
         self.transmissionStartTime = wan.cur_time
-
+        
 
 
     def dijkstra(self, wan):
