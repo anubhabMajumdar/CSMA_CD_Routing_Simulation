@@ -10,6 +10,10 @@ class Node:
         self.backoffTime = 0
         self.transmissionStartTime = 0
         self.curTP = 0
+        self.buffer = []
+
+    def add_packet(self, packet):
+        self.buffer.append(packet)
 
     def startTransmit(self):
         self.status = "Transmitting"
