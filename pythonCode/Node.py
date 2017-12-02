@@ -11,7 +11,7 @@ class Node:
         self.transmissionStartTime = 0
         self.curTP = 0
 
-    def startTransmit(self, lan):
+    def startTransmit(self):
         self.status = "Transmitting"
 
     def reStartTransmit(self, cur_time):

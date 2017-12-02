@@ -5,21 +5,19 @@ import collections
 
 class LAN:
     def __init__(self, nodeList):
-        self.cur_time = 0
         self.tt = 10
         self.collCount = 0
         self.bandwidth = 100  # Mbps
         self.vel = 2 * (10 ** 8)
         self.distance = 2000 
-        self.nodeList=nodeList
+        self.nodeList = nodeList
+        self.nodeCount = len(self.nodeList)
 
-    def run(self):
-        for i in range(1, self.nodeCount+1):
-            self.node[i].operation(self)
+    def run(self, wan):
+        for i in range(self.nodeCount):
+            self.node[i].operation(self, wan)
         self.coll_detect()
-
-        print(self.cur_time)
-        self.cur_time = self.cur_time + 1
+        
 
     def coll_detect(self):
         collIndex = []
@@ -36,7 +34,6 @@ class LAN:
 
     def print_stat(self):
         for i in range(1, 5):
-            print("Total packets sent from Node {}: {}".format(i, self.host[i].packetCount - 1))
-            print("Average end to end throughput from Node {}: {}".format(i, self.node[i].throughput(self)))
+            print("Total packets sent from Host {}: {}".format(host[i].id, self.host[i].packetCount - 1))
+            print("Average end to end throughput from Node {}: {}".format(i, self.host[i].throughput(self)))
         print("Number of collisions: ", self.collCount)
-        print("Simulation end time", self.cur_time)

@@ -1,10 +1,10 @@
 class Packet:
-    def __init__(self, id, size=1000):
+    def __init__(self, id, ip, mac):
         self.id = id
-        self.ip = ''
-        self.mac = ''
+        self.ip = ip
+        self.mac = mac
         self.hop_count = 0
-        self.size = size
+        self.size = 1000
         self.collision_count = 0
 
     def incr_collision_count(self):
