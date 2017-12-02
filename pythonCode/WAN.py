@@ -10,12 +10,14 @@ class WAN:
         self.graph = {}
         self.updateGraph()
         self.createLAN(host, router)
+        self.tt = 80
+        self.tp = 10
 
     def createLAN(self,host, router):
-        lan1list=[host[0],host[1],router[0],router[1]]
-        lan2list=[host[2],host[3],router[2],router[3]]
-        self.lan1=LAN(lan1list)
-        self.lan2=LAN(lan2list)
+        lan1list = [host[0],host[1],router[0],router[1]]
+        lan2list = [host[2],host[3],router[2],router[3]]
+        self.lan1 = LAN(lan1list)
+        self.lan2 = LAN(lan2list)
 
     def run(self):    
         self.lan1.run(self)
@@ -47,15 +49,15 @@ class WAN:
 
 if __name__ == "__main__":
     # slot_time=int(input("Enter the slot time"))
-    host=[]
-    router=[]
+    host = []
+    router = []
     slot_time = 10
     lambd = 5
-    for i in range(1, 5):
-        host.append(Host(chr(ord('A')+i-1), float(lambd) / slot_time))
-        router.append(Router("R"+str(i)))
+    for i in range(4):
+        host.append(Host(chr(ord('A')+i), float(lambd) / slot_time))
+        router.append(Router("R"+str(i+1)))
     max_time = int(input("Enter the max time: "))
-    part3=WAN(host,router)
+    part3 = WAN(host, router)
     for _ in range(max_time + 1):
         part3.run()
 
