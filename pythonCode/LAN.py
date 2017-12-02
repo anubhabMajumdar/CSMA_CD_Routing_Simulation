@@ -1,6 +1,7 @@
 from Node import Node
 import time
 import collections
+import WAN
 
 
 class LAN:

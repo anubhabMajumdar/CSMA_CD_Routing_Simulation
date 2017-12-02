@@ -9,8 +9,13 @@ class Router(Node):
         self.transmissionStartTime = 0
         self.packetCount = 1
         self.status
+        self.buffer = []
+        
     def update_table(self):
         return
+
+    def add_packet(self, packet):
+        self.buffer.append(packet)
 
     def routing(self, packet):
         packet.mac = self.route_table(packet.IP)
