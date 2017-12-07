@@ -51,19 +51,35 @@ class WAN:
 #     print k, "--->", wan.graph[k]
 # r.operation(wan)
 
-if __name__ == "__main__":
+# if __name__ == "__main__":
     # slot_time=int(input("Enter the slot time"))
-    host = []
-    router = []
-    slot_time = 15
-    lambd = 5
-    for i in range(4):
-        host.append(Host.Host(chr(ord('A')+i), float(lambd) / slot_time))
-        router.append(Router.Router("R"+str(i+1)))
-    max_time = int(input("Enter the max time: "))
-    part3 = WAN(host, router, slot_time)
-    for _ in range(max_time + 1):
-        part3.run()
-        time.sleep(3)
+# def runCodeRun(max_time):
+#     host = []
+#     router = []
+#     slot_time = 15
+#     lambd = 5
+#     for i in range(4):
+#         host.append(Host.Host(chr(ord('A')+i), float(lambd) / slot_time))
+#         router.append(Router.Router("R"+str(i+1)))
+#     # max_time = int(input("Enter the max time: "))
+#     part3 = WAN(host, router, slot_time)
+#     for _ in range(max_time + 1):
+#         part3.run()
+#         time.sleep(3)
 
-    part3.print_stat()
+#     # part3.print_stat()
+
+host = []
+router = []
+slot_time = 15
+lambd = 5
+for i in range(4):
+    host.append(Host.Host(chr(ord('A')+i), float(lambd) / slot_time))
+    router.append(Router.Router("R"+str(i+1)))
+part3 = WAN(host, router, slot_time)
+def runCodeRun():
+    global part3
+    part3.run()
+    return part3
+    
+    # part3.print_stat()
