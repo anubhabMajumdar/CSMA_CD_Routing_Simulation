@@ -1,0 +1,98 @@
+﻿<html>
+<head>
+
+<script language='javascript'>
+
+function loop()
+{
+	setInterval(function(){ sendRequest(); }, 3000);
+	// sendRequest();
+}
+
+function setColour(status, to, container)
+{
+	if (status == "Transmitting")
+	{
+		container.style.background = '#008000';
+		container.innerHTML = to;
+	}
+	else if (status == 'Collision')
+	{
+		container.style.background = '#ff0000';
+		container.innerHTML = to;
+	}
+	else if (status == 'Waiting')
+	{
+		container.style.background = '#ffff00';
+		container.innerHTML = to;
+	}
+	else if (status == 'Ready')
+	{
+		container.style.background = '#909090';
+		container.innerHTML = "";
+	}
+}
+
+function controller(res)
+{
+	// alert(res.A.status);
+	setColour(res.A.status, res.A.to, document.getElementById("rectangle1"));
+	setColour(res.B.status, res.B.to, document.getElementById("rectangle3"));
+	setColour(res.C.status, res.C.to, document.getElementById("rectangle2"));
+	setColour(res.D.status, res.D.to, document.getElementById("rectangle4"));
+	setColour(res.R1.status, res.R1.to, document.getElementById("circle1"));
+	setColour(res.R2.status, res.R2.to, document.getElementById("circle3"));
+	setColour(res.R3.status, res.R3.to, document.getElementById("circle2"));
+	setColour(res.R4.status, res.R4.to, document.getElementById("circle4"));
+}
+
+function sendRequest()
+{
+	var xmlhttp = new XMLHttpRequest();
+    xmlhttp.overrideMimeType("application/json");
+    xmlhttp.onreadystatechange = function () {
+    	if (xmlhttp.readyState == 4) {
+            // alert("1");
+            var res = JSON.parse(xmlhttp.responseText);;
+            // alert(JSON.stringify(res.A.status));
+            // var res = xmlhttp.responseText;
+            controller(res);
+            // var jsonStr = JSON.stringify(res);
+            // alert(jsonStr);
+        }
+    };
+    xmlhttp.open("GET", "http://127.0.0.1:5002/", true);
+    xmlhttp.send();
+}
+
+</script>
+<link rel="stylesheet" type="text/css" href="stylee.css" media="screen" />
+
+</head>
+<body>
+<button type="button" onClick="loop()">Start</button>
+ <div id="vertical-line1"><font size="4">BUS 1</font></div>
+<div id="vertical-line2"><font size="4">BUS 2</font></div>
+<div id="horizontal-line1"></div>
+<div id="horizontal-line2"></div>
+<div id="horizontal-line3"></div>
+<div id="horizontal-line4"></div>
+<div id="horizontal-line5"></div>
+<div id="horizontal-line6"></div>
+<div id="horizontal-line7"></div>
+<div id="horizontal-line8"></div>
+<div id="horizontal-line9"></div>
+<div id="horizontal-line10"></div>
+<div id="circle1"><font size="8">R1</font></div>
+<div id="circle2"><font size="8">R3</font></div>
+<div id="circle3"><font size="8">R2</font></div>
+<div id="circle4"><font size="8">R4</font></div>
+<div id="rectangle1"><font size="8">A</font></div>
+<div id="rectangle2"><font size="8">C</font></div>
+<div id="rectangle3"><font size="8">B</font></div>
+<div id="rectangle4"><font size="8">D</font></div>
+<div id="slanted-line"></div>
+<div id="slanted-line1"></div>
+</div>
+</body>
+</html>

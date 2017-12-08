@@ -13,8 +13,8 @@ class WAN:
         self.graph = {}
         self.updateGraph()
         self.createLAN(host, router)
-        self.tt = 2
-        self.tp = 1
+        self.tt = 80 #2
+        self.tp = 10 #1
         self.slot_time=slot_time
 
     def createLAN(self,host, router):
@@ -27,6 +27,9 @@ class WAN:
         self.lan1.run(self)
         self.lan2.run(self)
         self.cur_time = self.cur_time + 1
+        if self.cur_time%2000 == 0:
+          print "Updating network cost"
+          self.updateGraph()
 
     def updateGraph(self):
         # TP is 10 for LAN components
@@ -71,8 +74,8 @@ class WAN:
 
 host = []
 router = []
-slot_time = 15
-lambd = 5
+slot_time = 50 #15
+lambd = 0.5 #5
 for i in range(4):
     host.append(Host.Host(chr(ord('A')+i), float(lambd) / slot_time))
     router.append(Router.Router("R"+str(i+1)))

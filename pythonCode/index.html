@@ -5,9 +5,37 @@
 
 function loop()
 {
-	setInterval(function(){ sendRequest(); }, 3000);
+	setInterval(function(){ sendRequest(); }, 100);
 	// sendRequest();
 }
+
+function loadTable(data) {
+    var table = document.getElementById("statusUpdateTable");
+    var properties = ['status', 'to', 'id', 'IP', 'MAC', 'collisionCount', 'packetCount'];
+    var objs = ['A', 'B', 'R1', 'R2', 'R3', 'R4', 'C', 'D']
+    
+    table.innerHTML = "";
+    var row = table.insertRow(0);
+    var cell = row.insertCell(0);
+    for (var i = 0; i < objs.length; i++){
+    	var cell = row.insertCell(i+1);
+    	cell.innerHTML = objs[i];
+    }
+
+    for (var i = 0; i < properties.length; i++){
+    	var property = properties[i];
+	    
+    	var row = table.insertRow(i+1);
+    	var cell = row.insertCell(0);
+    	cell.innerHTML = properties[i];
+    	for (var j = 0; j < objs.length; j++){
+	        var cell = row.insertCell(j+1);
+	        cell.innerHTML = data[objs[j]][property];
+
+		}
+	}
+}
+
 
 function setColour(status, to, container)
 {
@@ -44,6 +72,8 @@ function controller(res)
 	setColour(res.R2.status, res.R2.to, document.getElementById("circle3"));
 	setColour(res.R3.status, res.R3.to, document.getElementById("circle2"));
 	setColour(res.R4.status, res.R4.to, document.getElementById("circle4"));
+	loadTable(res);
+	document.getElementById("output").innerHTML = res['time'] + " mu-sec";
 }
 
 function sendRequest()
@@ -70,29 +100,42 @@ function sendRequest()
 
 </head>
 <body>
-<button type="button" onClick="loop()">Start</button>
- <div id="vertical-line1"><font size="4">BUS 1</font></div>
-<div id="vertical-line2"><font size="4">BUS 2</font></div>
-<div id="horizontal-line1"></div>
-<div id="horizontal-line2"></div>
-<div id="horizontal-line3"></div>
-<div id="horizontal-line4"></div>
-<div id="horizontal-line5"></div>
-<div id="horizontal-line6"></div>
-<div id="horizontal-line7"></div>
-<div id="horizontal-line8"></div>
-<div id="horizontal-line9"></div>
-<div id="horizontal-line10"></div>
-<div id="circle1"><font size="8">R1</font></div>
-<div id="circle2"><font size="8">R3</font></div>
-<div id="circle3"><font size="8">R2</font></div>
-<div id="circle4"><font size="8">R4</font></div>
-<div id="rectangle1"><font size="8">A</font></div>
-<div id="rectangle2"><font size="8">C</font></div>
-<div id="rectangle3"><font size="8">B</font></div>
-<div id="rectangle4"><font size="8">D</font></div>
-<div id="slanted-line"></div>
-<div id="slanted-line1"></div>
+<div>	
+	<div>
+		<div id="vertical-line1"><font size="4">BUS 1</font></div>
+		<div id="vertical-line2"><font size="4">BUS 2</font></div>
+		<div id="horizontal-line1"></div>
+		<div id="horizontal-line2"></div>
+		<div id="horizontal-line3"></div>
+		<div id="horizontal-line4"></div>
+		<div id="horizontal-line5"></div>
+		<div id="horizontal-line6"></div>
+		<div id="horizontal-line7"></div>
+		<div id="horizontal-line8"></div>
+		<div id="horizontal-line9"></div>
+		<div id="horizontal-line10"></div>
+		<div id="circle1"><font size="8">R1</font></div>
+		<div id="circle2"><font size="8">R3</font></div>
+		<div id="circle3"><font size="8">R2</font></div>
+		<div id="circle4"><font size="8">R4</font></div>
+		<div id="rectangle1"><font size="8">A</font></div>
+		<div id="rectangle2"><font size="8">C</font></div>
+		<div id="rectangle3"><font size="8">B</font></div>
+		<div id="rectangle4"><font size="8">D</font></div>
+		<div id="slanted-line"></div>
+		<div id="slanted-line1"></div>
+	</div>
+	<div>
+		<button type="button" onClick="loop()">Start</button>
+	</div>
+	<div id="extra">
+		<table id="statusUpdateTable">
+		</table>
+	</div>
+	<div id='output'>0 mu-sec</div>
+	<div>
 </div>
+
+
 </body>
 </html>

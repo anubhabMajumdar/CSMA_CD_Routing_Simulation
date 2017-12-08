@@ -38,8 +38,47 @@ def hello():
 	wan = WAN.runCodeRun()
 	d = {}
 	for i in range(4):
-		d[wan.lan1.nodeList[i].id] = {"status": wan.lan1.nodeList[i].status, "to": wan.lan1.nodeList[i].curReceiver}
-		d[wan.lan2.nodeList[i].id] = {"status": wan.lan2.nodeList[i].status, "to": wan.lan2.nodeList[i].curReceiver}
+		if wan.lan1.nodeList[i].packet != None:
+			d[wan.lan1.nodeList[i].id] = {
+				"status": wan.lan1.nodeList[i].status, 
+				"to": wan.lan1.nodeList[i].curReceiver,
+				"id": wan.lan1.nodeList[i].packet.id,
+				"IP": wan.lan1.nodeList[i].packet.ip,
+				"MAC": wan.lan1.nodeList[i].packet.mac,
+				"collisionCount": wan.lan1.nodeList[i].packet.collision_count,
+				"packetCount": wan.lan1.nodeList[i].packetCount
+				}
+		else:
+			d[wan.lan1.nodeList[i].id] = {
+				"status": wan.lan1.nodeList[i].status, 
+				"to": wan.lan1.nodeList[i].curReceiver,
+				"id": "",
+				"IP": "",
+				"MAC": "",
+				"collisionCount": "",
+				"packetCount": wan.lan1.nodeList[i].packetCount
+				}
+		if wan.lan2.nodeList[i].packet != None:
+			d[wan.lan2.nodeList[i].id] = {
+				"status": wan.lan2.nodeList[i].status, 
+				"to": wan.lan2.nodeList[i].curReceiver,
+				"id": wan.lan2.nodeList[i].packet.id,
+				"IP": wan.lan2.nodeList[i].packet.ip,
+				"MAC": wan.lan2.nodeList[i].packet.mac,
+				"collisionCount": wan.lan2.nodeList[i].packet.collision_count,
+				"packetCount": wan.lan1.nodeList[i].packetCount
+				}
+		else:
+			d[wan.lan2.nodeList[i].id] = {
+				"status": wan.lan2.nodeList[i].status, 
+				"to": wan.lan2.nodeList[i].curReceiver,
+				"id": "",
+				"IP": "",
+				"MAC": "",
+				"collisionCount": "",
+				"packetCount": wan.lan1.nodeList[i].packetCount
+				}
+	d['time'] = wan.cur_time
 	return jsonify(d)
 
 @app.route('/signup')

@@ -9,7 +9,7 @@ class Router(Node):
         self.packet = None
         self.curReceiver = None
         self.transmissionStartTime = 0
-        self.packetCount = 1
+        self.packetCount = 0
         self.status
         self.buffer = []
         
@@ -33,6 +33,8 @@ class Router(Node):
                 self.curReceiver = None
                 self.transmissionStartTime = 0
                 send_to = self.packet.mac
+                self.packetCount+=1
+                self.packet = None
                 if send_to.startswith('R'):
                     idx = int(send_to[-1])-1
                     wan.router[idx].add_packet(self.packet)

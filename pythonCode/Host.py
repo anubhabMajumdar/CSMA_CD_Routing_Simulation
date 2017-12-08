@@ -10,7 +10,7 @@ class Host(Node):
         super(Host, self).__init__(id)
         self.lambdaVal = l  # per mu sec
         self.packet = None
-        self.packetCount = 1
+        self.packetCount = 0
         self.curReceiver = None
         self.mac = id
         self.ip = id
@@ -50,6 +50,7 @@ class Host(Node):
                 self.transmissionStartTime = 0
                 self.curReceiver = None
                 self.packetCount+=1
+                self.packet=None
         elif self.status == 'Collision':
             self.calcBackoffTime(wan)
             self.status = 'Waiting'
