@@ -46,7 +46,8 @@ def hello():
 				"IP": wan.lan1.nodeList[i].packet.ip,
 				"MAC": wan.lan1.nodeList[i].packet.mac,
 				"collisionCount": wan.lan1.nodeList[i].packet.collision_count,
-				"packetCount": wan.lan1.nodeList[i].packetCount
+				"packetCount": wan.lan1.nodeList[i].packetCount,
+				"receivedPacketCount": wan.lan1.nodeList[i].receivedPacketCount
 				}
 		else:
 			d[wan.lan1.nodeList[i].id] = {
@@ -56,7 +57,8 @@ def hello():
 				"IP": "",
 				"MAC": "",
 				"collisionCount": "",
-				"packetCount": wan.lan1.nodeList[i].packetCount
+				"packetCount": wan.lan1.nodeList[i].packetCount,
+				"receivedPacketCount": wan.lan1.nodeList[i].receivedPacketCount
 				}
 		if wan.lan2.nodeList[i].packet != None:
 			d[wan.lan2.nodeList[i].id] = {
@@ -66,7 +68,8 @@ def hello():
 				"IP": wan.lan2.nodeList[i].packet.ip,
 				"MAC": wan.lan2.nodeList[i].packet.mac,
 				"collisionCount": wan.lan2.nodeList[i].packet.collision_count,
-				"packetCount": wan.lan1.nodeList[i].packetCount
+				"packetCount": wan.lan2.nodeList[i].packetCount,
+				"receivedPacketCount": wan.lan2.nodeList[i].receivedPacketCount
 				}
 		else:
 			d[wan.lan2.nodeList[i].id] = {
@@ -76,9 +79,29 @@ def hello():
 				"IP": "",
 				"MAC": "",
 				"collisionCount": "",
-				"packetCount": wan.lan1.nodeList[i].packetCount
+				"packetCount": wan.lan2.nodeList[i].packetCount,
+				"receivedPacketCount": wan.lan2.nodeList[i].receivedPacketCount
 				}
 	d['time'] = wan.cur_time
+
+	g = {}
+	n =  ['A', 'B', 'C', 'D', 'R1', 'R2', 'R3', 'R4']
+	for i in n:
+		g[i] = {}
+		for j in n:
+			if i==j:
+				g[i][j] = 0
+			else:
+				g[i][j] = 'inf'
+
+	for i in n:
+		vals = wan.graph[i]
+		for j in vals:
+			neighbour = j[0]
+			cost = j[1]
+			g[i][neighbour] = cost
+
+	d['graph'] = g
 	return jsonify(d)
 
 @app.route('/signup')

@@ -1,6 +1,7 @@
 import Packet
 # import WAN
 from Node import Node as Node
+import copy
 
 class Router(Node):
     def __init__(self,id):
@@ -34,10 +35,14 @@ class Router(Node):
                 self.transmissionStartTime = 0
                 send_to = self.packet.mac
                 self.packetCount+=1
-                self.packet = None
                 if send_to.startswith('R'):
                     idx = int(send_to[-1])-1
                     wan.router[idx].add_packet(self.packet)
+                    wan.router[idx].receivedPacketCount+=1
+                else:
+                    idx = ord(send_to) - ord('A')
+                    wan.host[idx].receivedPacketCount+=1
+                self.packet = None
         elif self.status == 'Collision':
             self.calcBackoffTime(wan)
             self.status = 'Waiting'
@@ -47,7 +52,7 @@ class Router(Node):
     def startTransmit(self, wan):
         self.dijkstra(wan)
 
-        self.packet = self.buffer[0]
+        self.packet = copy.deepcopy(self.buffer[0])
         del self.buffer[0]
 
         self.routing(self.packet)

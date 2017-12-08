@@ -10,6 +10,7 @@ class Node(object):
         self.backoffTime = 0
         self.transmissionStartTime = 0
         self.curTP = 0
+        self.receivedPacketCount = 0
 
     def startTransmit(self):
         self.status = "Transmitting"

@@ -46,6 +46,7 @@ class Host(Node):
         elif self.status == 'Transmitting':
             if self.transmissionStartTime + wan.tt + wan.tp < wan.cur_time:
                 wan.router[int(self.next_hop_mac[1])-1].add_packet(self.packet)
+                wan.router[int(self.next_hop_mac[1])-1].receivedPacketCount+=1
                 self.status = "Ready"
                 self.transmissionStartTime = 0
                 self.curReceiver = None

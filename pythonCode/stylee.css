@@ -237,6 +237,15 @@ th, td {
   position:absolute;
   LEFT:1200px;
 }
+
+#table2 {
+    border: 1px solid black;
+    width: 50%;
+    position:absolute;
+    TOP:100px;
+    LEFT:1000px;
+}
+
 /*#customers {
     font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
     border-collapse: collapse;

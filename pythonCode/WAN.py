@@ -74,8 +74,8 @@ class WAN:
 
 host = []
 router = []
-slot_time = 50 #15
-lambd = 0.5 #5
+slot_time = 500 #15
+lambd = 1 #5
 for i in range(4):
     host.append(Host.Host(chr(ord('A')+i), float(lambd) / slot_time))
     router.append(Router.Router("R"+str(i+1)))

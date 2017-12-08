@@ -11,8 +11,8 @@ function loop()
 
 function loadTable(data) {
     var table = document.getElementById("statusUpdateTable");
-    var properties = ['status', 'to', 'id', 'IP', 'MAC', 'collisionCount', 'packetCount'];
-    var objs = ['A', 'B', 'R1', 'R2', 'R3', 'R4', 'C', 'D']
+    var properties = ['status', 'to', 'id', 'IP', 'MAC', 'collisionCount', 'packetCount', 'receivedPacketCount'];
+    var objs = ['A', 'B', 'R1', 'R2', 'R3', 'R4', 'C', 'D'];
     
     table.innerHTML = "";
     var row = table.insertRow(0);
@@ -34,6 +34,13 @@ function loadTable(data) {
 
 		}
 	}
+}
+
+function loadCostTable(data)
+{
+	var table = document.getElementById("table2");
+	var objs = ['A', 'B', 'R1', 'R2', 'R3', 'R4', 'C', 'D'];
+	
 }
 
 
@@ -133,6 +140,10 @@ function sendRequest()
 		</table>
 	</div>
 	<div id='output'>0 mu-sec</div>
+	<div id="costTable">
+		<table id="table2">
+		</table>
+	</div>
 	<div>
 </div>
 
