@@ -7,35 +7,17 @@ from flask import render_template
 from flask_cors import CORS
 import WAN
 
-# db_connect = create_engine('sqlite:///chinook.db')
 app = Flask(__name__)
 CORS(app)
 api = Api(app)
 
 count = 0
-# class Employees(Resource):
-#     def get(self):
-#         statuses = ["Ready", "Ready"]
-#         return jsonify(statuses)
-
-
-# class Tracks(Resource):
-#     def get(self):
-#         conn = db_connect.connect()
-#         query = conn.execute("select trackid, name, composer, unitprice from tracks;")
-#         result = {'data': [dict(zip(tuple (query.keys()) ,i)) for i in query.cursor]}
-#         return jsonify(result)
-
-# class Employees_Name(Resource):
-#     def get(self, employee_id):
-#         conn = db_connect.connect()
-#         query = conn.execute("select * from employees where EmployeeId =%d "  %int(employee_id))
-#         result = {'data': [dict(zip(tuple (query.keys()) ,i)) for i in query.cursor]}
-#         return jsonify(result)
 
 @app.route("/", methods=['GET'])
 def hello():
 	wan = WAN.runCodeRun()
+	if wan.cur_time==3000001:
+		return
 	d = {}
 	for i in range(4):
 		if wan.lan1.nodeList[i].packet != None:
@@ -102,16 +84,13 @@ def hello():
 			g[i][neighbour] = cost
 
 	d['graph'] = g
+
+	for i in wan.router:
+		d[i.id+"_route_table"] = i.route_table
+	
+	for i in wan.host:
+		d[i.id+"_throughput"] = i.curThroughput
 	return jsonify(d)
-
-@app.route('/signup')
-def signUp():
-	return render_template('signUp.html')
-
-
-# api.add_resource(Employees, '/employees') # Route_1
-# api.add_resource(Tracks, '/tracks') # Route_2
-# api.add_resource(Employees_Name, '/employees/<employee_id>') # Route_3
 
 
 if __name__ == '__main__':

@@ -235,15 +235,51 @@ th, td {
 #output{
   font-size: 50px;
   position:absolute;
-  LEFT:1200px;
+  LEFT:1100px;
+}
+
+#output1{
+  font-size: 30px;
+  position:absolute;
+  LEFT:1100px;
+  TOP:600;
+}
+
+#output2{
+  font-size: 30px;
+  position:absolute;
+  LEFT:1100px;
+  TOP:650;
+}
+
+#output3{
+  font-size: 30px;
+  position:absolute;
+  LEFT:1100px;
+  TOP:700;
+}
+
+#output4{
+  font-size: 30px;
+  position:absolute;
+  LEFT:1100px;
+  TOP:750;
 }
 
 #table2 {
     border: 1px solid black;
-    width: 50%;
+    width: 300px;
     position:absolute;
     TOP:100px;
-    LEFT:1000px;
+    LEFT:1100px;
+}
+
+#table3 {
+    border: 1px solid black;
+    width: 300px;
+    position:absolute;
+    TOP:400px;
+    LEFT:1100px;
 }
 
 /*#customers {

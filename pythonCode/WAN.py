@@ -75,11 +75,13 @@ class WAN:
 host = []
 router = []
 slot_time = 500 #15
-lambd = 1 #5
+lambd = 0.5 #5
 for i in range(4):
     host.append(Host.Host(chr(ord('A')+i), float(lambd) / slot_time))
     router.append(Router.Router("R"+str(i+1)))
 part3 = WAN(host, router, slot_time)
+# for i in range(3000000-1):
+#   part3.run()
 def runCodeRun():
     global part3
     part3.run()

@@ -1,4 +1,5 @@
-﻿<html>
+﻿<!-- Referenced Javascript, HTML and CSS documentations about shapes and tables -->
+<html>
 <head>
 
 <script language='javascript'>
@@ -39,10 +40,55 @@ function loadTable(data) {
 function loadCostTable(data)
 {
 	var table = document.getElementById("table2");
-	var objs = ['A', 'B', 'R1', 'R2', 'R3', 'R4', 'C', 'D'];
-	
+	var objs = ['A', 'B', 'C', 'D', 'R1', 'R2', 'R3', 'R4'];
+
+	table.innerHTML = "";
+    var row = table.insertRow(0);
+    var cell = row.insertCell(0);
+    for (var i = 0; i < objs.length; i++){
+    	var cell = row.insertCell(i+1);
+    	cell.innerHTML = objs[i];
+    }
+
+    for (var i = 0; i < objs.length; i++){
+    	var obj = objs[i];
+	    
+    	var row = table.insertRow(i+1);
+    	var cell = row.insertCell(0);
+    	cell.innerHTML = obj;
+    	for (var j = 0; j < objs.length; j++){
+	        var cell = row.insertCell(j+1);
+	        cell.innerHTML = data['graph'][objs[i]][objs[j]];
+        }
+	}
 }
 
+function loadDijkstraTable(data)
+{
+	var table = document.getElementById("table3");
+	var routers = ['R1', 'R2', 'R3', 'R4'];
+	var nodes = ['A', 'B', 'C', 'D'];
+
+	table.innerHTML = "";
+    var row = table.insertRow(0);
+    var cell = row.insertCell(0);
+    for (var i = 0; i < nodes.length; i++){
+    	var cell = row.insertCell(i+1);
+    	cell.innerHTML = nodes[i];
+    }
+
+    for (var i = 0; i < routers.length; i++){
+    	var obj = routers[i];
+	    
+    	var row = table.insertRow(i+1);
+    	var cell = row.insertCell(0);
+    	cell.innerHTML = obj;
+    	for (var j = 0; j < nodes.length; j++){
+	        var cell = row.insertCell(j+1);
+	        cell.innerHTML = data[obj+"_route_table"][nodes[j]];
+        }
+	}
+}
 
 function setColour(status, to, container)
 {
@@ -81,6 +127,12 @@ function controller(res)
 	setColour(res.R4.status, res.R4.to, document.getElementById("circle4"));
 	loadTable(res);
 	document.getElementById("output").innerHTML = res['time'] + " mu-sec";
+	loadCostTable(res);
+	loadDijkstraTable(res);
+	for (var i=1; i<=4; i++)
+	{
+		document.getElementById("output"+i).innerHTML = String.fromCharCode(65+i-1) + " --->  " + res[String.fromCharCode(65+i-1)+"_throughput"];
+	}
 }
 
 function sendRequest()
@@ -143,6 +195,16 @@ function sendRequest()
 	<div id="costTable">
 		<table id="table2">
 		</table>
+	</div>
+	<div id="dijkstraTable">
+		<table id="table3">
+		</table>
+	</div>
+	<div id="buffers">
+		<div id='output1'>Throughput1</div>
+		<div id='output2'>Throughput2</div>
+		<div id='output3'>Throughput3</div>
+		<div id='output4'>Throughput4</div>
 	</div>
 	<div>
 </div>

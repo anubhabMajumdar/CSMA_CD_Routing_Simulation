@@ -25,6 +25,8 @@ class Router(Node):
         self.curReceiver = packet.mac
 
     def operation(self, wan):
+        self.dijkstra(wan)
+
         print("Status of Router {} is {} ".format(self.id,self.status))
         if self.status == 'Ready' and len(self.buffer)>0:
             self.startTransmit(wan)
@@ -50,8 +52,6 @@ class Router(Node):
             self.reStartTransmit(wan.cur_time)
 
     def startTransmit(self, wan):
-        self.dijkstra(wan)
-
         self.packet = copy.deepcopy(self.buffer[0])
         del self.buffer[0]
 
