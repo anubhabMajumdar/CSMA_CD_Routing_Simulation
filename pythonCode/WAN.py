@@ -27,7 +27,7 @@ class WAN:
         self.lan1.run(self)
         self.lan2.run(self)
         self.cur_time = self.cur_time + 1
-        if self.cur_time%2000 == 0:
+        if self.cur_time%100 == 0:
           print "Updating network cost"
           self.updateGraph()
 
@@ -74,8 +74,8 @@ class WAN:
 
 host = []
 router = []
-slot_time = 500 #15
-lambd = 0.5 #5
+slot_time = 200 #15
+lambd = 1 #5
 for i in range(4):
     host.append(Host.Host(chr(ord('A')+i), float(lambd) / slot_time))
     router.append(Router.Router("R"+str(i+1)))
