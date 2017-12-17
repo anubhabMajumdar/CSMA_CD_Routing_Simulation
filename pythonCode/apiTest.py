@@ -14,7 +14,8 @@ api = Api(app)
 count = 0
 
 @app.route("/", methods=['GET'])
-def hello():
+def networkStatus():
+	# print request.remote_addr
 	wan = WAN.runCodeRun()
 	if wan.cur_time==3000001:
 		return
